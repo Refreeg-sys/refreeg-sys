@@ -42,9 +42,9 @@ const SearchModal: FC<SearchModalProps> = ({ searchQuery, setSearchQuery, onSear
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup heading="Categories">
-              <CommandItem onSelect={() => console.log("Food Related selected")}>Food Related</CommandItem>
-              <CommandItem onSelect={() => console.log("Education Related selected")}>Education Related</CommandItem>
-              <CommandItem onSelect={() => console.log("Funds related selected")}>Funds related</CommandItem>
+              <CommandItem onSelect={() => console.log("Food Related selected")}>Food Related Causes</CommandItem>
+              <CommandItem onSelect={() => console.log("Education Related selected")}>Education Related Causes</CommandItem>
+              <CommandItem onSelect={() => console.log("Funds related selected")}>Funds related Causes</CommandItem>
             </CommandGroup>
           </CommandList>
         </Command>
