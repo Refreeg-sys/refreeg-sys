@@ -17,7 +17,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import SearchModal from './searchModal';
-import { ChevronDown, LogOut } from 'lucide-react'
+import { ChevronDown, LogOut } from 'lucide-react';
+
 
 interface MenuLinkProps {
   href: string;
@@ -62,8 +63,7 @@ export function Navbar({ userSession }: { userSession?: boolean }) {
       <nav className="hidden lg:flex ml-auto gap-6">
         <div className="relative">
           <MenuLink href="#" onClick={toggleSearchModal} className='hover:bg-blue-100'>
-            <Image src={Search} height={20} width={20} alt="search" />
-            Search
+            <SearchModal searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearch={handleSearch} />
           </MenuLink>
         </div>
 
@@ -148,8 +148,6 @@ export function Navbar({ userSession }: { userSession?: boolean }) {
           List a cause
         </MenuLink>
 
-
-
         {userSession ? <MenuLink href='/dashboard/UserProfile'> <Image
           src="/UserProfile/defaultProfile.svg"
           alt="Profile"
@@ -170,7 +168,7 @@ export function Navbar({ userSession }: { userSession?: boolean }) {
           className="p-2"
           aria-label="Search"
         >
-          <Image src={Search} alt="search icon" height={24} width={24} />
+          <SearchModal searchQuery={searchQuery} setSearchQuery={setSearchQuery} onSearch={handleSearch} />
         </button>
         <Sheet>
           <SheetTrigger asChild>
@@ -251,21 +249,9 @@ export function Navbar({ userSession }: { userSession?: boolean }) {
               </div>
               }
             </div>
-
-
-
           </SheetContent>
         </Sheet>
       </div>
-
-      {/* Search Modal with Responsive Padding */}
-      <SearchModal
-        isOpen={isSearchModalOpen}
-        onClose={toggleSearchModal}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        onSearch={handleSearch}
-      />
     </header>
   );
 }

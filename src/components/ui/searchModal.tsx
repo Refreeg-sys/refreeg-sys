@@ -1,38 +1,55 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import {
+  Command,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+} from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Search } from "lucide-react";
 
 interface SearchModalProps {
-  isOpen: boolean;
-  onClose: () => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   onSearch: () => void;
 }
 
-const SearchModal: FC<SearchModalProps> = ({ isOpen, onClose, searchQuery, setSearchQuery, onSearch }) => {
-  if (!isOpen) return null;
+const SearchModal: FC<SearchModalProps> = ({ searchQuery, setSearchQuery, onSearch }) => {
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4 md:px-6">
-      <div className="bg-white p-6 rounded-md shadow-lg w-full max-w-md">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Search</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">Close</button>
-        </div>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="border rounded-md px-2 py-1 w-full outline-none"
-          placeholder="Search..."
-        />
-        <button
-          onClick={onSearch}
-          className="mt-2 w-full px-4 py-2 bg-blue-600 text-white rounded-md"
-        >
-          Search
-        </button>
-      </div>
-    </div>
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+      <button
+        className="flex items-center gap-1 p-2 transition"
+        onClick={() => setOpen(!open)}
+      >
+        <Search className="h-5 w-5 text-gray-600" />
+        <span className="hidden lg:inline-block">Search</span>
+      </button>
+
+      </PopoverTrigger>
+
+      <PopoverContent className="w-72 p-2 bg-white shadow-lg rounded-md border">
+        <Command>
+          <CommandInput
+            placeholder="Search for a cause..."
+            value={searchQuery}
+            onValueChange={(value) => setSearchQuery(value)}
+          />
+          <CommandList>
+            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandGroup heading="Categories">
+              <CommandItem onSelect={() => console.log("Food Related selected")}>Food Related</CommandItem>
+              <CommandItem onSelect={() => console.log("Education Related selected")}>Education Related</CommandItem>
+              <CommandItem onSelect={() => console.log("Funds related selected")}>Funds related</CommandItem>
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
   );
 };
 
